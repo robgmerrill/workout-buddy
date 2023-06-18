@@ -11,5 +11,14 @@ const workoutSchema = new Schema({
     reps: {
         type: Number,
         required: true,
+    }, 
+    load: {
+        type: Number,
+        required: true
     }
+}, {
+    timestamps: true
 })
+
+// create model - Workout will be pluralized
+export default mongoose.model('Workout', workoutSchema);

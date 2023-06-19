@@ -3,6 +3,8 @@ import { config } from 'dotenv';
 import workoutRoutes from './routes/workouts.js';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dbConnect from './dbConnect.js';
+
 
 config();
 
@@ -23,11 +25,12 @@ app.use((req, res, next) => {
 app.use('/api/workouts', workoutRoutes)
 
 // connect to mongodb
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log('Connected to MongoDB')
+dbConnect().then(() => {
     app.listen(PORT, () => {
-        console.log(`Connected to DB and running on port ${PORT}`)
-    })
-}
-).catch(err => console.log(err));
+        console.log(`Connected to DB and running on port ${PORT}`);
+    });
+}).catch(err => console.log(err));
 
+
+
+export default app;

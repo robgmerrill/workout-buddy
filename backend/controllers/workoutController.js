@@ -37,8 +37,24 @@ const getOneWorkout = async (req, res) => {
 
 // create one workout
 const createWorkout = async (req, res) => {
-    console.log(req.body);
+
     const { title, load, reps} = req.body;
+
+    let emptyFields = [];
+
+    if (!title) {
+        emptyFields.push('title');
+    } 
+    if (!load) {
+        emptyFields.push('load');
+    }
+    if (!reps) {
+        emptyFields.push('reps');
+    }
+
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: `The following fields are empty: ${emptyFields.join(', ')}` });
+    }
     
     // add doc to DB
     try {
@@ -48,13 +64,14 @@ const createWorkout = async (req, res) => {
         res.status(200).json(workout);
     } catch (err) {
         console.log(err);
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ error: err.message });
     }
 
 }
 
 // delete one workout
 const deleteWorkout = async (req, res) => {
+    console.log('delete route hit')
     try {
         // get id from route paramaters
         const { id } = req.params;

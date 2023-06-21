@@ -42,6 +42,7 @@ export default function WorkoutForm() {
 
         // Check if the request was not successful, if so, update error state.
         if (!res.ok) {
+            console.log(json.error)
             setError(json.error);
         }
 

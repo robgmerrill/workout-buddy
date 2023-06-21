@@ -18,6 +18,11 @@ const workoutsReducer = (state, action) => {
             return {
                 workouts: [action.payload, ...state.workouts],
             }
+        case 'DELETE_WORKOUT':
+            // If the action is 'DELETE_WORKOUT', we filter out the workout with the matching id.
+            return {
+                workouts: state.workouts.filter(workout => workout._id !== action.payload),
+            }
         default:
             // If the action is not recognized, we return the existing state unchanged.
             return state;
